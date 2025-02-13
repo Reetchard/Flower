@@ -7,8 +7,21 @@
     <link rel="style.css" href="">
 </head>
 <body class="not-loaded">
-    <div class="valentine-text">Happy Valentine's Day Darling</div>
-    <div class="valentine-texts">I love you so Much Babycakes</div>
+    <div class="valentine-text"></div>
+    <div class="valentine-texts"></div>
+    <div class="mail-icon" onclick="openModal()">
+      <span class="heart-icon">♥️</span>
+  </div>
+    <div class="valentine-left"></div>
+    <div class="valentine-right"></div>
+    
+
+    <div class="modal" id="modal">
+      <div class="modal-content">
+          <span class="close" onclick="closeModal()">&times;</span>
+          <img src="pic.png" alt="Valentine's Image" class="modal-image">
+      </div>
+  </div>
   <div class="night"></div>
   <div class="flowers">
     <div class="flower flower--1">
@@ -548,16 +561,23 @@ body {
 .flower__light {
   position: absolute;
   bottom: 0vmin;
-  width: 1vmin;
-  height: 1vmin;
-  background-color: #fffb00;
-  border-radius: 50%;
+  width: 1vmin; /* You can adjust this size */
+  height: 1vmin; /* You can adjust this size */
+  font-size: 1.5vmin; /* Adjust font size for the heart icon */
+  color: #fffb00; /* Default color for the icon */
   filter: blur(0.2vmin);
   animation: light-ans 4s linear infinite backwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* Alternate color for odd elements */
 .flower__light:nth-child(odd) {
-  background-color: #23f0ff;
+  color: #23f0ff;
 }
+
+/* Specific positions and delays */
 .flower__light--1 {
   left: -2vmin;
   animation-delay: 1s;
@@ -589,6 +609,12 @@ body {
 .flower__light--8 {
   left: -6vmin;
   animation-delay: 3.5s;
+}
+
+/* Add the heart icon */
+.flower__light::before {
+  content: '♥️'; /* Use the heart icon */
+  display: block; /* Ensure it behaves as a block element */
 }
 .flower__grass {
   --c: #159faa;
@@ -1308,12 +1334,12 @@ mask-image: linear-gradient(to top, transparent 40%, #079097 80%) !important;
 }
 
 .valentine-text {
-    top: 20%; /* Adjusted for spacing */
+    top: 10%; /* Adjusted for spacing */
     font-size: 2em;
 }
 
 .valentine-texts {
-    top: 30%; /* Adjusted for spacing */
+    top: 15%; /* Adjusted for spacing */
     font-size: 1.5em; /* Slightly smaller for the second line */
 }
 
@@ -1322,6 +1348,106 @@ mask-image: linear-gradient(to top, transparent 40%, #079097 80%) !important;
     to {
         opacity: 3; /* End state is fully visible */
     }
+}
+.valentine-left, .valentine-right {
+    position: fixed;
+    top: 20%; /* Adjusted for vertical positioning */
+    width: 45%; /* Adjusted width for left and right */
+    color: white;
+    text-shadow: 2px 2px 10px rgba(255, 0, 0, 0.8);
+    z-index: 1000; /* Ensure it's on top */
+    font-size: 1.5em; /* Adjust font size as needed */
+    overflow-wrap: break-word; /* Ensure long words break */
+}
+
+.valentine-left {
+    left: 3%; /* Position left */
+}
+
+.valentine-right {
+    right: -5%; /* Position right */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 10; /* End state is fully visible */
+    }
+}
+.mail-icon {
+    position: absolute; /* Change to absolute */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0; /* Reset margin */
+    width: 50px; /* Size of the mail icon */
+    height: 50px; /* Size of the mail icon */
+    background-color: #2c181f00; /* Icon color */
+    border-radius: 50%; /* Circle shape */
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0);
+    font-size: 24px; /* Size of the heart */
+    z-index: 10; /* Ensure the icon is in front */
+    top: calc(100% - 100px); /* Adjust this value to position it below the texts */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center the icon */
+}
+
+.heart-icon {
+    font-size: 3em; /* Make heart larger */
+    position: center; /* Position it in the middle */
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.7); /* Black with opacity */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 20px;
+    border: 1px solid #ddd; /* Softer border color */
+    width: 50%; /* Smaller width */
+    max-width: 400px; /* Maximum width for smaller screens */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    text-align: center; /* Center the content */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition */
+    transform: scale(0.9); /* Initial scale for animation */
+    opacity: 0; /* Initial opacity for animation */
+}
+
+.modal.active .modal-content {
+    transform: scale(1); /* Scale up to normal size */
+    opacity: 1; /* Fade in */
+}
+
+.modal-image {
+    max-width: 100%; /* Responsive image */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners for the image */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.2s ease; /* Smooth color transition */
+}
+
+.close:hover,
+.close:focus {
+    color: #333; /* Darker color on hover */
+    text-decoration: none;
+    cursor: pointer;
 }
   </style>
 </body>
@@ -1332,6 +1458,91 @@ mask-image: linear-gradient(to top, transparent 40%, #079097 80%) !important;
       clearTimeout(c);
     }, 1000);
   };
+  const messages = [
+        "Happy Valentine's Darling ️ ♥️️ ",
+        "I love you so Much Babycakes ️ ♥️️ ♥️",
+    ];
+
+    const textElement = document.querySelector('.valentine-text');
+    const textsElement = document.querySelector('.valentine-texts');
+    const noteElement = document.querySelector('.valentine-note'); // New element for the note
+
+    function typeWriter(text, element, delay) {
+        let index = 0;
+        function type() {
+            if (index < text.length) {
+                element.innerHTML += text.charAt(index) === '\n' ? '<br>' : text.charAt(index); // Handle line breaks
+                index++;
+                setTimeout(type, delay);
+            }
+        }
+        type();
+    }
+
+    // Start typing effects
+    typeWriter(messages[0], textElement, 100); // 100ms delay
+    setTimeout(() => {
+        typeWriter(messages[1], textsElement, 100);
+    }, messages[0].length * 100 + 1000); // Wait for first message to finish
+    setTimeout(() => {
+        typeWriter(messages[2], noteElement, 50); // Typing the note
+    }, (messages[0].length + messages[1].length) * 100 + 2000); // Wait for previous messages to finish
+     const leftMessage = "Happy Valentine’s Day, Baby♥️. Every day with you feels like\n a celebration of love, but today, I want to take a moment to remind you\n just how much you mean to me️  ♥️.\n \nFrom the moment you came into my life, you’ve filled my world with️ \n warmth, laughter, and love️️ ♥️. \n \nYour smile is my favorite sight, your voice is my favorite melody, and your\nlove is my greatest treasure️ ♥️. \n\nYou make my ordinary days extraordinary just by being in them.";
+    
+    const rightMessage = "I love the way you laugh at my jokes (even the bad ones), the way your eyes \n light up when you talk about something you love, and the way you hold \nmy hand as if you never want to let go ♥️. \n\n With you, I have found not just a partner, but my best friend, my safe place, \nand my greatest adventure ♥️.\n\nNo matter where life takes us, I promise to always cherish you, support you, \n and love you with all that I am ♥️. You are my foreverand always,\n my greatest blessing.\n\nHappy Valentine’s Day, my love. I adore you endlessly ♥️ .";
+
+    const leftElement = document.querySelector('.valentine-left');
+    const rightElement = document.querySelector('.valentine-right');
+
+    function typeWriter(text, element, delay) {
+        let index = 0;
+        function type() {
+            if (index < text.length) {
+                element.innerHTML += text.charAt(index) === '\n' ? '<br>' : text.charAt(index); // Handle line breaks
+                index++;
+                setTimeout(type, delay);
+            }
+        }
+        type();
+    }
+
+    setTimeout(() => {
+      typeWriter(leftMessage, leftElement, 50); // Typing the left message
+    }, leftMessage.length * 50 + 2000); // Wait for the left message to finish
+    
+    setTimeout(() => {
+        typeWriter(rightMessage, rightElement, 50); // Typing the right message
+    }, leftMessage.length * 50 + 2000); // Wait for the left message to finish
+// Get the modal
+const modal = document.querySelector('.modal');
+
+// Get the close button
+const closeBtn = document.querySelector('.close');
+
+// Function to open the modal
+function openModal() {
+    modal.classList.add('active'); // Add the 'active' class
+    modal.style.display = 'block';
+}
+
+// Function to close the modal
+function closeModal() {
+    modal.classList.remove('active'); // Remove the 'active' class
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 300); // Wait for the transition to complete
+}
+
+// Event listener for the close button
+closeBtn.addEventListener('click', closeModal);
+
+// Optional: Close the modal when clicking outside the modal content
+window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+
 </script>
 
 </html>
