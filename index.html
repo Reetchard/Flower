@@ -1295,29 +1295,34 @@ mask-image: linear-gradient(to top, transparent 40%, #079097 80%) !important;
 .not-loaded * {
   animation-play-state: paused !important;
 }
-.valentine-text {
-            position: fixed;
-            top: 20%; /* Adjusted for spacing */
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 2em;
-            text-shadow: 2px 2px 10px rgba(255, 0, 0, 0.8);
-            z-index: 1000; /* Ensure it's on top */
-            text-align: center;
-        }
+.valentine-text, .valentine-texts {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-shadow: 2px 2px 10px rgba(255, 0, 0, 0.8);
+    z-index: 1000; /* Ensure it's on top */
+    text-align: center;
+    opacity: 0; /* Start off invisible */
+    animation: fadeIn 5s forwards; /* Fade-in animation */
+}
 
-        .valentine-texts {
-            position: fixed;
-            top: 30%; /* Adjusted for spacing */
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 1.5em; /* Slightly smaller for the second line */
-            text-shadow: 2px 2px 10px rgba(255, 0, 0, 0.8);
-            z-index: 1000; /* Ensure it's on top */
-            text-align: fixed;
-        }
+.valentine-text {
+    top: 20%; /* Adjusted for spacing */
+    font-size: 2em;
+}
+
+.valentine-texts {
+    top: 30%; /* Adjusted for spacing */
+    font-size: 1.5em; /* Slightly smaller for the second line */
+}
+
+/* Keyframes for the fade-in effect */
+@keyframes fadeIn {
+    to {
+        opacity: 3; /* End state is fully visible */
+    }
+}
   </style>
 </body>
 <script>
